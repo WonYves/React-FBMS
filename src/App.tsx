@@ -5,9 +5,6 @@ const App = () => {
   const outlet = useRoutes(router)  //将路由表存入
   return (
     <div>
-      <Link to='/home'>Home</Link>
-      <Link to='/about'>About</Link>
-
       {/* 占位符 */}
       {outlet}
     </div>

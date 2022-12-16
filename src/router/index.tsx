@@ -1,23 +1,36 @@
-import { lazy } from 'react'
-import Home from '../view/Home'
-import About from '../view/About'
-/// Navigate 重定向组件
-import { Navigate } from "react-router-dom"
+import React, { lazy } from 'react'  // 懒加载
+import { Navigate } from "react-router-dom" /// Navigate 重定向组件
 
+const Home = lazy(()=>import('../view/Home'))
+const Page1 = lazy(()=>import('../view/Page1'))
+const Page2 = lazy(()=>import('../view/Page2'))
+
+const withLoading = (view:JSX.Element) => (
+    <React.Suspense fallback={<div>Loading...</div>}>
+        {view}
+    </React.Suspense>
+)
 
 const routes = [
-    {
-        path:'/',
-        element:<Navigate to='/home'/>
-    },
-    {
-        path:'/home',
-        element:<Home />
 
+    {
+        path:"/",
+        element:<Navigate to='/page1'/>,   // 重定向
     },
     {
-        path:'/about',
-        element:<About />
+        path:"/",
+        element:<Home />,
+        children:[
+            {
+                path:'/page1',
+                element:withLoading(<Page1 />)
+            },
+            {
+                path:'/page2',
+                element:withLoading(<Page2 />)
+            },
+        ]
+
     }
 ]
 
