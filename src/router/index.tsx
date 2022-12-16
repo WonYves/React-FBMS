@@ -12,11 +12,15 @@ const withLoading = (view:JSX.Element) => (
 )
 
 const routes = [
-
+    {
+        path:'*',
+        element:<Navigate to='/page1'/>,   // 重定向
+    },
     {
         path:"/",
         element:<Navigate to='/page1'/>,   // 重定向
     },
+    // ===================================  嵌套路由
     {
         path:"/",
         element:<Home />,
@@ -31,7 +35,8 @@ const routes = [
             },
         ]
 
-    }
+    },
+    // ===================================  嵌套路由
 ]
 
 export default routes

@@ -1,73 +1,14 @@
 import React, { useState } from 'react';
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import { Outlet, useNavigate } from 'react-router-dom'
-
+import { Breadcrumb, Layout, theme } from 'antd';
+import { Outlet} from 'react-router-dom'
+import MainMenu from '../../components/MainMenu'
 const { Header, Content, Footer, Sider } = Layout;
 
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
-const items: MenuItem[] = [
-  getItem('Js', '/page1', <PieChartOutlined />),
-  getItem('Ts', '/page2', <DesktopOutlined />),
-  getItem('框架', 'page3', <UserOutlined />, [
-    getItem('REACT', '3'),
-    getItem('VUE', '4'),
-    getItem('ANGULAR', '5'),
-  ]),
-  getItem('数据结构', 'page4', <TeamOutlined />, [
-    getItem('栈', '6'),
-    getItem('队列', '8')
-  ]),
-  getItem('AJAX', '9', <FileOutlined />),
-];
-
-const rootSubmenuKeys = ['page3', 'page4'];
 
 const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [openKeys, setOpenKeys] = useState(['']);
 
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-  const navigateTo = useNavigate()
-
-  const meauClick = (e:{key:string}) => {
-    // 点击跳转的路由 编程式导航  利用hook
-    navigateTo(e.key)
-  }
-  
-  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
-    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-    if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
-      setOpenKeys(keys);
-    } else {
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-  };
-
+  const {token: { colorBgContainer },} = theme.useToken();
   return (
     <Layout style={{ minHeight: '100vh' }}>
         {/* 侧边栏 */}
@@ -78,15 +19,7 @@ const Home: React.FC = () => {
       >
         <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
         {/* 导航菜单 */}
-        <Menu 
-        theme="dark" 
-        defaultSelectedKeys={['/page1']} 
-        mode="inline" 
-        items={items} 
-        onClick={meauClick} 
-        onOpenChange={onOpenChange}
-        openKeys={openKeys}
-        />
+        <MainMenu/>
       </Sider>
         {/* 右边内容 */}
       <Layout className="site-layout">
