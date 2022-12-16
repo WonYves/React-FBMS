@@ -1,13 +1,15 @@
-import { useState } from 'react'
-
+import {useRoutes, Link} from 'react-router-dom'  //{ route的hook }
+import router from './router' // {路由表}
 
 const App = () => {
-  const [count, setCount] = useState(0)
-
+  const outlet = useRoutes(router)  //将路由表存入
   return (
     <div>
-      根组件
-      
+      <Link to='/home'>Home</Link>
+      <Link to='/about'>About</Link>
+
+      {/* 占位符 */}
+      {outlet}
     </div>
   )
 }
