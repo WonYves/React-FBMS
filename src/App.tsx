@@ -1,4 +1,4 @@
-import {useRoutes, Link} from 'react-router-dom'  //{ route的hook }
+import {useRoutes} from 'react-router-dom'  //{ route的hook }
 import router from './router' // {路由表}
 
 const App = () => {

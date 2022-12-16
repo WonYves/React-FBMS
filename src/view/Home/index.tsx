@@ -31,35 +31,62 @@ function getItem(
 const items: MenuItem[] = [
   getItem('Js', '/page1', <PieChartOutlined />),
   getItem('Ts', '/page2', <DesktopOutlined />),
-  getItem('框架', 'sub1', <UserOutlined />, [
+  getItem('框架', 'page3', <UserOutlined />, [
     getItem('REACT', '3'),
     getItem('VUE', '4'),
     getItem('ANGULAR', '5'),
   ]),
-  getItem('数据结构', 'sub2', <TeamOutlined />, [
-    getItem('栈', '6'), getItem('队列', '8')
+  getItem('数据结构', 'page4', <TeamOutlined />, [
+    getItem('栈', '6'),
+    getItem('队列', '8')
   ]),
   getItem('AJAX', '9', <FileOutlined />),
 ];
 
+const rootSubmenuKeys = ['page3', 'page4'];
+
 const Home: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [openKeys, setOpenKeys] = useState(['']);
+
   const {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigateTo = useNavigate()
 
   const meauClick = (e:{key:string}) => {
-    // 点击跳转的路由 编程式导航
+    // 点击跳转的路由 编程式导航  利用hook
     navigateTo(e.key)
   }
+  
+  const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey!) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
         {/* 侧边栏 */}
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <Sider 
+      collapsible
+      collapsed={collapsed} 
+      onCollapse={(value) => setCollapsed(value)}
+      >
         <div style={{ height: 32, margin: 16, background: 'rgba(255, 255, 255, 0.2)' }} />
-        <Menu theme="dark" defaultSelectedKeys={['/page1']} mode="inline" items={items} onClick={meauClick} />
+        {/* 导航菜单 */}
+        <Menu 
+        theme="dark" 
+        defaultSelectedKeys={['/page1']} 
+        mode="inline" 
+        items={items} 
+        onClick={meauClick} 
+        onOpenChange={onOpenChange}
+        openKeys={openKeys}
+        />
       </Sider>
         {/* 右边内容 */}
       <Layout className="site-layout">
