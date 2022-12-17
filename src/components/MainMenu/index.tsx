@@ -46,7 +46,7 @@ const rootSubmenuKeys = ['page3', 'page4'];
 
 const MainMenu: React.FC = () => {
     let firstOpenKeys:string = ''
-    const [openKeys, setOpenKeys] = useState([firstOpenKeys]);
+    const [openKeys, setOpenKeys] = useState([firstOpenKeys])
     const currentRoute = useLocation()   // 获取当前路径
 
     const navigateTo = useNavigate()
