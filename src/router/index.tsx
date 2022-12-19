@@ -1,9 +1,10 @@
 import React, { lazy } from 'react'  // 懒加载
 import { Navigate } from "react-router-dom" /// Navigate 重定向组件
 
-const Home = lazy(()=>import('../view/Home'))
-const Page1 = lazy(()=>import('../view/Page1'))
-const Page2 = lazy(()=>import('../view/Page2'))
+const Home = lazy(()=>import('../view/home'))
+const Page1 = lazy(()=>import('../view/page1'))
+const Page2 = lazy(()=>import('../view/page2'))
+const Page301 = lazy(()=>import('../view/page301'))
 
 const withLoading = (view:JSX.Element) => (
     <React.Suspense fallback={<div>Loading...</div>}>
@@ -32,6 +33,10 @@ const routes = [
             {
                 path:'/page2',
                 element:withLoading(<Page2 />)
+            },
+            {
+                path:'/page3/page301',
+                element:withLoading(<Page301 />)
             },
         ]
 
