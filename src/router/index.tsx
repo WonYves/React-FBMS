@@ -1,6 +1,7 @@
 import React, { lazy } from 'react'  // 懒加载
 import { Navigate } from "react-router-dom" /// Navigate 重定向组件
 
+const Login = lazy(()=>import('../view/Login'))
 const Home = lazy(()=>import('../view/home'))
 const Page1 = lazy(()=>import('../view/page1'))
 const Page2 = lazy(()=>import('../view/page2'))
@@ -42,6 +43,10 @@ const routes = [
 
     },
     // ===================================  嵌套路由
+    {
+        path:'/login',
+        element:withLoading(<Login/>)
+    }
 ]
 
 export default routes
