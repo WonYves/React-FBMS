@@ -1,8 +1,7 @@
-import request from "../util/requset"
-import Api from "./API"
+import request from "../utils/requset"
+import API from "./API"
 
-export const getMenu = (params: any) => request({
-    url: '',
+export const captchaAPI = () => request({
+    url: API.PROD_API_CAPTCHAIMAGE,
     method: 'get',
-    params,
 })

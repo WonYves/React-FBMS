@@ -1,11 +1,9 @@
 import {useSelector, useDispatch} from 'react-redux'   // 获取数据  通过hook useSelector
-
+import numStatus from '../store/NumStatus'  // 调用异步函数需要引用
 const Page1 = () => {
     // 通过 useSelector 获取仓库数据
-    const { num } = useSelector((state: RootState) => ({
-        num: state.NumstatusReducer.num
-    }))
-    const { arr } = useSelector((state: RootState) => ({
+    const { num, arr } = useSelector((state: RootState) => ({
+        num: state.NumstatusReducer.num,
         arr: state.ArrstatusReducer.arr
     }))
     // 通过useDispatch 修改仓库数据
@@ -13,10 +11,13 @@ const Page1 = () => {
     const changeNum = () => {
         //  dispatch({type: '字符串(认为是一个记号)' , value: 3})  type是固定的 value是自定义
         // dispatch({type: 'add'})
+        // 同步的写法
         dispatch({type: 'add2', value: 218})
     }
     const changeNum2 = () => {
-        dispatch({type: 'add3'})
+        // 异步的写法
+        // redux-thunk 的用法 格式： dispatch(异步执行的函数)
+        dispatch(numStatus.asyncAcitons.asyncAdd1)
     }
     const changePush = () => {
         dispatch({type: 'arrpush', value: 50})

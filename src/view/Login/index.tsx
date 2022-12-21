@@ -1,14 +1,24 @@
 import styles from './login.module.scss'
 import initLoginBg from './init.ts'
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect } from 'react'
 import { Button, Input, Space, Form } from 'antd';
+import { captchaAPI } from '../../api/menu'
 import './login.less'
 const Login = () => {
+
+    // 点击验证码图片盒子
+    const getImage = useCallback(async()=>{
+        const res = await captchaAPI()
+       
+            console.log(res);
+        
+    }, [])
 
     useEffect(() => {
         initLoginBg()
         window.onresize = () => { initLoginBg() }
         // 窗口发生改变 做背景初始化
+        getImage()
     }, [])
 
     const onFinish = (values:ChangeEvent<HTMLInputElement>) => {

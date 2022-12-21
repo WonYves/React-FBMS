@@ -1,4 +1,5 @@
-import { legacy_createStore, combineReducers } from 'redux'    // 1.创建store仓库
+import { legacy_createStore, combineReducers, compose, applyMiddleware } from 'redux'    // 1.创建store仓库
+import reduxThunk from 'redux-thunk'
 import NumstatusReducer from './NumStatus/reducer'
 import ArrstatusReducer from './ArrStatus/reducer'
 
@@ -11,7 +12,9 @@ const reducers = combineReducers({
 // 创建数据仓库
 // window.__REDUX_DEVTOOLS_EXTENSION__ &&window.__REDUX_DEVTOOLS_EXTENSION__()  
 // 让浏览器redux插件能正常使用
-const stroe = legacy_createStore(reducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()) 
+let composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}):compose //rt
 
-
-export default stroe
+const store = legacy_createStore(reducers,composeEnhancers(applyMiddleware(reduxThunk))); //rt
+ 
+export default store
