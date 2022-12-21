@@ -1,17 +1,20 @@
 import styles from './login.module.scss'
 import initLoginBg from './init.ts'
-import { ChangeEvent, useCallback, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { Button, Input, Space, Form } from 'antd';
 import { captchaAPI } from '../../api/menu'
 import './login.less'
 const Login = () => {
 
+    const [captchaImg, setCaptchaImg] = useState('')
+
     // 点击验证码图片盒子
     const getImage = useCallback(async()=>{
         const res = await captchaAPI()
-       
-            console.log(res);
-        
+        if(res.code === 200){
+            console.log(res)
+            setCaptchaImg('data:image/gif;base64,' + res.img)
+        }
     }, [])
 
     useEffect(() => {
@@ -52,8 +55,8 @@ const Login = () => {
                                 <Form.Item name='uuid'>
                                     <Input placeholder="验证码" className='ipt' />
                                 </Form.Item>
-                                <div className="captchaImg">
-                                    <img src="xxx" height="38" />
+                                <div className="captchaImg" onClick={getImage}>
+                                    <img src={captchaImg} height="38" />
                                 </div>
                             </div>
                             <Button type='primary' htmlType='submit' className='loginBtn' block>登录</Button>
